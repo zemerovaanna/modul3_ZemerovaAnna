@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">modul3</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="signin">Sign in</string>
+    <string name="quests">My quests</string>
+</resources>
