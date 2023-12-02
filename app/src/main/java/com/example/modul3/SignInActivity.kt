@@ -9,16 +9,13 @@ import androidx.appcompat.app.AlertDialog
 import com.example.modul3.databinding.ActivitySignInBinding
 
 class SignInActivity : Activity() {
-
-    //lateinit var binding: ActivitySignInBinding
+    
     lateinit var btn: Button
     lateinit var email: EditText
     lateinit var password: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //binding = ActivitySignInBinding.inflate(layoutInflater)
-        //setContentView(binding.root)
         setContentView(R.layout.activity_sign_in)
 
         email = findViewById(R.id.email)
@@ -27,32 +24,34 @@ class SignInActivity : Activity() {
         btn = findViewById(R.id.login)
 
         btn.setOnClickListener{
-            if (email.text.toString().isNotEmpty() && password.text.toString().isNotEmpty()){
-                startActivity(Intent(this, QuestsActivity::class.java))
-            } else {
+        if (email.isNotEmpty() && password.isNotEmpty()) {
+                if (checkEmail(email) == true) {
+                    if (password.length >= 8 && password.length <= 20) {
+                    startActivity(Intent(this, QuestsActivity::class.java))
+                    } else {
+                            val alert = AlertDialog.Builder(this)
+                            .setTitle("Ошибка")
+                            .setMessage("Пароль должен содержать не менее 8 и не более 20 символов")
+                            .setPositiveButton("Ok", null)
+                            .create()
+                            .show()
+                    }
+                } else {
+                    val alert = AlertDialog.Builder(this)
+                    .setTitle("Ошибка")
+                    .setMessage("Неверный адрес электронной почты")
+                    .setPositiveButton("Ok", null)
+                    .create()
+                    .show()
+                }
+            }  else {
                 val alert = AlertDialog.Builder(this)
-                    .setTitle("Error")
-                    .setMessage("Empty fields")
+                    .setTitle("Ошибка")
+                    .setMessage("Пустые поля")
                     .setPositiveButton("Ok", null)
                     .create()
                     .show()
             }
         }
-
-       /* binding.login.setOnClickListener{
-            var email = binding.email.text.toString()
-            var password = binding.password.text.toString()
-
-            if (email.isNotEmpty() && password.isNotEmpty()){
-                startActivity(Intent(this, QuestsActivity::class.java))
-            } else {
-                val alert = AlertDialog.Builder(this)
-                    .setTitle("Error")
-                    .setMessage("Empty fields")
-                    .setPositiveButton("Ok", null)
-                    .create()
-                    .show()
-            }
-        }*/
     }
 }
